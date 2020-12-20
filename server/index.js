@@ -1,14 +1,48 @@
 const { GraphQLServer } = require("graphql-yoga");
+const db = require("./config/db.js");
+const util = require("util");
+
+const query = util.promisify(db.query).bind(db);
 
 const typeDefs = `
+  type Post {
+    id: ID!
+    body: String!
+    createdAt: String!
+    author: Author!
+  }
+  type Author {
+    id: ID!
+    name: String!
+    age: Int!
+  }
   type Query {
-    hello(name: String): String!
+    getPosts: [Post]
   }
 `;
 
 const resolvers = {
+    Post: {
+        author: async ({ id }) => {
+            try {
+                let sql = "SELECT * FROM author WHERE author.id = ?";
+                const sqlQuery = await query(sql, [id]);
+                return sqlQuery[0];
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
     Query: {
-        hello: (_, { name }) => `Hello ${name || "World"} knecht`,
+        getPosts: async () => {
+            try {
+                let sql = "SELECT * FROM post";
+                const sqlQuery = await query(sql);
+                return sqlQuery;
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 };
 

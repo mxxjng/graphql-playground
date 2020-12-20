@@ -9,16 +9,7 @@ import { useQuery } from "@apollo/client"
 import gql from "graphql-tag"
 import Test from "../components/test"
 
-// This query is executed at run time by Apollo.
-const APOLLO_QUERY = gql`
-    {
-        hello(name: "Max")
-    }
-`
-
 const IndexPage: React.FC = () => {
-    const { loading, error, data } = useQuery(APOLLO_QUERY)
-    console.log(data)
     return (
         <Layout>
             <SEO title="Home" />
