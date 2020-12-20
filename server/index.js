@@ -7,9 +7,9 @@ const typeDefs = `
 `;
 
 const resolvers = {
-  Query: {
-    hello: (_, { name }) => `Hello ${name || "World"} knecht`,
-  },
+    Query: {
+        hello: (_, { name }) => `Hello ${name || "World"} knecht`,
+    },
 };
 
 const server = new GraphQLServer({ typeDefs, resolvers });
