@@ -8,11 +8,11 @@ const db = mysql.createConnection({
 });
 
 // Connect
-db.connect((err) => {
+db.connect((err: any) => {
     if (err) {
         throw err;
     }
     console.log("MySql Connected...");
 });
 
-module.exports = db;
+export default db;
