@@ -1,7 +1,7 @@
 export const typeDefs = `
-    type Mutation {
-        addPost(body: String! createdAt: String! authorId: Int!): Post!
-    }
+  type Mutation {
+    addPost(body: String! createdAt: String! authorId: Int!): Post!
+  }
   type Post {
     id: ID!
     body: String!
@@ -15,6 +15,6 @@ export const typeDefs = `
   }
   type Query {
     getPosts: [Post]
-    getSinglePost(id: Int!): Post!
+    getSinglePost(id: ID!): Post!
   }
 `;
