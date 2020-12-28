@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.19.1",
     "graphql-yoga": "^1.18.3",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.6",

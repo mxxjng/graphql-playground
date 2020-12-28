@@ -17,8 +17,8 @@ export const resolvers = {
         },
     },
     Mutation: {
-        addPost: async (parent: any, args: any, ctx: any, info: any) => {
-            console.log({ parent, args, ctx, info });
+        addPost: async (parent: any, args: any, { pubsub }: any) => {
+            console.log({ parent, args });
             try {
                 let sql = "INSERT INTO post VALUES (Null, ?, ?, ?)";
                 const sqlQuery = await query(sql, [
@@ -27,11 +27,15 @@ export const resolvers = {
                     args.authorId,
                 ]);
                 console.log(sqlQuery);
-                return {
+                let post = {
                     id: 111,
                     body: args.body,
                     createdAt: args.createdAt,
                 };
+                let sql1 = "SELECT * FROM post";
+                const sqlQuery1 = await query(sql1);
+                pubsub.publish("POST_CREATED", { postCreated: sqlQuery1 });
+                return post;
             } catch (error) {
                 console.log(error);
             }
@@ -55,6 +59,12 @@ export const resolvers = {
             } catch (error) {
                 console.log(error);
             }
+        },
+    },
+    Subscription: {
+        postCreated: {
+            subscribe: (_: any, __: any, { pubsub }: any) =>
+                pubsub.asyncIterator("POST_CREATED"),
         },
     },
 };
