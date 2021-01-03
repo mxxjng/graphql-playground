@@ -5,17 +5,18 @@ export const typeDefs = gql`
         addPost(body: String!, createdAt: String!, authorId: Int!): Post!
     }
     type Comment {
-        id: ID!
-        commentBody: String!
-        createdAt: String!
-        commentAuthor: Author!
-        post: Int!
+        id: Int
+        commentBody: String
+        createdAt: String
+        commentAuthor: Author
+        postId: Int
     }
     type Post {
-        id: ID!
+        postId: ID!
         body: String!
         createdAt: String!
         author: Author!
+        comments: [Comment]
     }
     type Author {
         id: ID!

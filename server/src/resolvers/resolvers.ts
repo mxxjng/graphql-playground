@@ -5,15 +5,16 @@ const query = util.promisify(db.query).bind(db);
 
 export const resolvers = {
     Post: {
-        author: async ({ author }: any) => {
-            try {
-                let sql = "SELECT * FROM author WHERE author.id = ?";
-                const sqlQuery = await query(sql, [author]);
-                console.log(sqlQuery);
-                return sqlQuery[0];
-            } catch (error) {
-                console.log(error);
-            }
+        author: async (parent: any, _: any, ctx: any) => {
+            return ctx.authorLoader.load(parent.author);
+        },
+        comments: async (parent: any, _: any, ctx: any) => {
+            return ctx.commentLoader.load(parent.postId);
+        },
+    },
+    Comment: {
+        commentAuthor: async (parent: any, _: any, ctx: any) => {
+            return ctx.authorLoader.load(parent.commentAuthor);
         },
     },
     Mutation: {
